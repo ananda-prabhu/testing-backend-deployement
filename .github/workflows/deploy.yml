@@ -19,26 +19,25 @@ jobs:
           username: ${{ secrets.SERVERUSER }}
           key: ${{ secrets.SERVERSSHKEY }}
           script: |
-                   echo "Current user:"
-                   whoami
+            echo "Current user:"
+            whoami
 
-                  echo "Current directory:"
-                  pwd
+            echo "Current directory:"
+            pwd
 
-                  echo "Root folders:"
-                  ls /
+            echo "Root folders:"
+            ls /
 
-                  echo "Apps folder:"
-                  ls /apps
+            echo "Apps folder:"
+            ls /apps
 
-                  cd /apps/testing-backend-deployement
+            cd /apps/testing-backend-deployement
 
-                  echo "Inside repo:"
-                  pwd
-                  ls -la
+            echo "Inside repo:"
+            pwd
+            ls -la
 
-                  git status
+            git status
 
-                  docker compose down
-                  docker compose up -d --build
-            
+            docker compose down
+            docker compose up -d --build
