@@ -19,7 +19,26 @@ jobs:
           username: ${{ secrets.SERVERUSER }}
           key: ${{ secrets.SERVERSSHKEY }}
           script: |
-            cd /apps/testing-backend-deployement
-            git pull origin main
-            docker compose down
-            docker compose up -d --build
+                   echo "Current user:"
+                   whoami
+
+                  echo "Current directory:"
+                  pwd
+
+                  echo "Root folders:"
+                  ls /
+
+                  echo "Apps folder:"
+                  ls /apps
+
+                  cd /apps/testing-backend-deployement
+
+                  echo "Inside repo:"
+                  pwd
+                  ls -la
+
+                  git status
+
+                  docker compose down
+                  docker compose up -d --build
+            
