@@ -12,32 +12,35 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy to VPS
+      - name: Prepare VPS folder
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SERVERIP }}
           username: ${{ secrets.SERVERUSER }}
           key: ${{ secrets.SERVERSSHKEY }}
           script: |
-            echo "Current user:"
-            whoami
+            set -e
+            APP_DIR="/apps/testing-backend-deployement"
+            mkdir -p "$APP_DIR"
+            rm -rf "$APP_DIR"/* "$APP_DIR"/.[!.]* "$APP_DIR"/..?* || true
 
-            echo "Current directory:"
-            pwd
+      - name: Upload app to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVERIP }}
+          username: ${{ secrets.SERVERUSER }}
+          key: ${{ secrets.SERVERSSHKEY }}
+          source: ".,!.git,!.github"
+          target: "/apps/testing-backend-deployement"
 
-            echo "Root folders:"
-            ls /
-
-            echo "Apps folder:"
-            ls /apps
-
+      - name: Restart app (docker compose)
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVERIP }}
+          username: ${{ secrets.SERVERUSER }}
+          key: ${{ secrets.SERVERSSHKEY }}
+          script: |
+            set -e
             cd /apps/testing-backend-deployement
-
-            echo "Inside repo:"
-            pwd
-            ls -la
-
-            git status
-
-            docker compose down
+            docker compose down || true
             docker compose up -d --build
