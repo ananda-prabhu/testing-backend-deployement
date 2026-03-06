@@ -20,6 +20,6 @@ jobs:
           key: ${{ secrets.SERVERSSHKEY }}
           script: |
             cd /apps/testing-backend-deployement
-            git pull
+            git pull origin main
             docker compose down
             docker compose up -d --build
