@@ -15,9 +15,9 @@ jobs:
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
+          host: ${{ secrets.SERVERIP }}
+          username: ${{ secrets.SERVERUSER }}
+          key: ${{ secrets.SERVERSSHKEY }}
           script: |
             cd /apps/testing-backend-deployement
             git pull
