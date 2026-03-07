@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
   res.json({
-    message: "Production Node.js API running 🚀"
+    message: "Production Node.js API running & try to connect"
   });
 });
 
